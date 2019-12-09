@@ -23,35 +23,39 @@ const question1 = () => {
 const question2 = (input) => {
 	return new Promise((resolve, reject) => {
 		readlineProcess.question('Do you want output using recursion or Loop/Interation? (Y/N) ', (answer2) => {
-			let promptInput  = answer2.trim();
+			let isRecursion  = answer2.trim();
 
-			if(promptInput && (promptInput === 'y' || promptInput === 'Y')) {
-				promptInput = true;
+			if(isRecursion && (isRecursion === 'y' || isRecursion === 'Y')) {
+				isRecursion = true;
 				console.log('You opted to get fibonacci series using recursion');
 			} else {
 				console.log('You opted to get fibonacci series using loop/interation');
-				promptInput = false;
+				isRecursion = false;
 			}
 
-			
-			if (promptInput) {
-				const recursionFibonacci = require('./recursion');
-				recursionFibonacci.getFibonacci(input);
-			} else {
-				const interationFibonacci = require('./loop-iteration');
-				interationFibonacci.getFibonacci(input);
-			}
-			resolve();
+			resolve(isRecursion);
 		});	
 	})
 	
 }
 
+const calculateFibonacciSeries = (input, isRecursion) => {
+	let fibonacciModule;
+	// require and load the module as per user input
+	if (isRecursion) {
+		fibonacciModule = require('./recursion');
+	} else {
+		fibonacciModule = require('./loop-iteration');
+	}
+	return fibonacciModule.getFibonacciSeries(input);
+}
+
 const main = async () => {
 	try {
 		const input = await question1();
-		await question2(input);
-		
+		const isRecursion = await question2(input);
+		const fibSeries = calculateFibonacciSeries(input, isRecursion);
+		console.log(`Fibonacci series upto ${input} numbers: `, fibSeries);
 		// close the process
 		readlineProcess.close();	
 	} catch (err) {

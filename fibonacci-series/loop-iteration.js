@@ -23,17 +23,16 @@ const getFibonacciSeries = (number) => {
 };
 
 module.exports = {
-	getFibonacci: (input) => {
+	getFibonacciSeries: (input) => {
 		console.log("=============================================")
 		console.log("//          Using Loops/Interations        //");
 		console.log("=============================================")
 
-		console.log(`Fibonacci series upto ${input} numbers:`);
-		let output = '0';
+		const output = [0];
 		for(let n = 1; n <= input; n++) {
 			const fibNumber = getFibonacciSeries(n);
-			output += ` ${String(fibNumber)}`;
+			output.push(fibNumber);
 		}
-		console.log(output);
+		return output;
 	}
 }
